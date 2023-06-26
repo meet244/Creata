@@ -4,7 +4,6 @@ import uuid
 import threading
 from flask import Flask, jsonify, request, render_template
 from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
 from pymongo import MongoClient
 
 CONNECTION_STRING = "mongodb+srv://meet2005pokar:BUhCWuglqb4tCP4E@cluster0.tnvbure.mongodb.net/?retryWrites=true&w=majority"
@@ -26,7 +25,7 @@ counts:int=1
 
 # from flask_cors import CORS
 
-# app = Flask(__name__)
+app = Flask(__name__)
 # CORS(app)
 
 
@@ -227,4 +226,4 @@ def delete():
 prompt = "The female bollywood actress's captivating journey led her to a whimsical garden with her beautiful face smiling, bursting with vibrant blooms and delightful creatures. Envision her childlike wonder and genuine happiness, as she discovers a hidden nook and playfully strikes a cute pose, leaving her fans in awe."
 
 if __name__ == "__main__":
-    app.run(debug=False,port=1523,host='0.0.0.0')
+    app.run(debug=True,host='0.0.0.0')
