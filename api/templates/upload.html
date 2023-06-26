@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>   
+    <title>Generate</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: rgb(18,21,30);
+        }
+        
+        .container {
+            display: flex;
+            width: 90%;
+            height: 90%;
+            border: 1px solid #cccccc83;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: rgb(34,40,57);
+        }
+        
+        .image {
+            margin-left: 15px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .image img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .buttons {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .danger-button {
+            width: 80%;
+            height: 50px;
+            margin-bottom: 10px;
+            color: #fff;
+            background-color: #f00;
+            border: none;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .back-button {
+            width: 80%;
+            height: 50px;
+            margin-bottom: 10px;
+            color: #fff;
+            background-color: rgb(0, 255, 85);
+            border: none;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .re-button {
+            width: 80%;
+            height: 50px;
+            margin-bottom: 10px;
+            color: #fff;
+            background-color: #4285F4;
+            border: none;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .copy-button {
+            width: 80%;
+            height: 50px;
+            margin-bottom: 10px;
+            color: #fff;
+            background-color: #ffd000;
+            border: none;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        textarea {
+            display: block;
+            margin: 0 auto 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image"></div>
+        <div class="buttons">
+            <textarea id="input"></textarea>
+            <button class="back-button" onclick="back()">Generate</button>
+            <button class="copy-button" onclick="copyit()">Copy</button>
+            <button class="re-button" onclick="reCaption()">Re-Caption</button>
+            <button class="danger-button" onclick="danger()">Danger</button>
+        </div>
+    </div>
+    
+    <script>
+        // URL for fetching images (replace with your actual URL)
+        let currentImageIndex = 0;
+        let images = [];
+        const imageElement = document.querySelector('.image');
+        
+        // Function to fetch images from the URL
+        function fetchImages() {
+            fetch('http://127.0.0.1:1523/load1', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    images = Object.entries(data).map(([imageName, caption]) => ({
+                        name: imageName,
+                        data: caption
+                    }));
+                    updateImage();
+                })
+                .catch(error => {
+                    console.log('Error fetching images:', error);
+                });
+        }
+        
+        // Function to update the displayed image
+        first = true;
+        function updateImage() {
+            textarea.value = images[currentImageIndex].data
+            const imag = document.createElement('img');
+
+            const imgSrc = `http://127.0.0.1:1523/image/${images[currentImageIndex].name}`;
+            imag.setAttribute('src', imgSrc);
+            
+            while (imageElement.firstChild) {
+                imageElement.removeChild(imageElement.firstChild);
+            }
+
+            imageElement.appendChild(imag);
+            
+            if(first){
+                first = false;
+                nextImage();
+                previousImage();
+            }
+            handleTextareaResize()
+        }
+
+        const textarea = document.getElementById('input');
+        function handleTextareaResize() {
+            textarea.style.height = 'auto'; // Reset the height to auto
+            textarea.style.height = textarea.scrollHeight + 'px'; // Set the height to match the content
+        }
+
+        
+        // Function to navigate to the previous image
+        function previousImage() {
+            if(currentImageIndex == 0){return;}
+            currentImageIndex--;
+            updateImage();
+        }
+        
+        // Function to navigate to the next image
+        function nextImage() {
+            if(currentImageIndex == images.length-1){return;}
+            currentImageIndex++;
+            updateImage();
+        }
+        
+        // Add event listeners for image clicks
+        imageElement.addEventListener('click', (event) => {
+            const { offsetX } = event;
+            const thirdWidth = imageElement.offsetWidth / 3;
+
+            if (offsetX < thirdWidth) {
+                previousImage(); // Clicked on the left part, go to previous image
+            } else if (offsetX > thirdWidth * 2) {
+                nextImage(); // Clicked on the right part, go to next image
+            } else {
+                copyToClipboard(`C:\\Users\\meet2\\OneDrive - Shri Vile Parle Kelavani Mandal\\Ai\\images\\Craiyon\\e. to upload\\${images[currentImageIndex].name}`);
+            }
+        });
+        
+        // Fetch images when the page loads
+        fetchImages();
+
+        function danger(){
+            fetch('http://127.0.0.1:1523/uploadDanger', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({image:images[currentImageIndex].name})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if(data == "ok"){
+                        images.splice(currentImageIndex,1)
+                        updateImage();
+                    }
+                })
+                .catch(error => {
+                    console.log('Error fetching images:', error);
+                });
+        }
+
+        function reCaption(){
+            fetch('http://127.0.0.1:1523/uploadRecaption', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({image:images[currentImageIndex].name})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if(data == "ok"){
+                        images.splice(currentImageIndex,1)
+                        updateImage();
+                    }
+                })
+                .catch(error => {
+                    console.log('Error fetching images:', error);
+                });
+        }
+        function copyit(){
+            copyToClipboard(textarea.value);
+        }
+        function back(){
+            // window.location.href = 'http://127.0.0.1:1523/';
+            // console.log(currentURL)
+            // window.location.href = currentURL + '&type=upload';
+            // console.log(window.location.pathname)
+            window.location.href = currentURL.replace('upload','home') ;
+            // window.location.href = 'http://127.0.0.1:1523/window.location.pathname';
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                console.log('Text copied to clipboard');
+                })
+                .catch((error) => {
+                console.error('Failed to copy text: ', error);
+                });
+        }
+
+        // Clear URL query parameters
+        function clearURLParams() {
+        const newURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        history.replaceState({}, document.title, newURL);
+        }
+
+        const currentURL = window.location.href;
+        // Call the function to clear URL query parameters
+        clearURLParams();
+    </script>
+</body>
+</html>
