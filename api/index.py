@@ -25,7 +25,7 @@ counts:int=1
 
 from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__)   
 CORS(app)
 
 
@@ -161,14 +161,15 @@ def data():
     # with open ("data.json") as d:
     #     data = d.read()
     #     d.close()
-    data = []
-    all_docs = d_col.find()
-    for doc in all_docs:
-        if('model' in doc):
-            data.append([doc['file'],doc['model'],doc['prompt'],doc['neg']])
-        else:
-            data.append([doc['file'],'',doc['prompt'],doc['neg']])
-
+    try:
+        data = []
+        all_docs = d_col.find()
+        for doc in all_docs:
+            if('model' in doc):
+                data.append([doc['file'],doc['model'],doc['prompt'],doc['neg']])
+            else:
+                data.append([doc['file'],'',doc['prompt'],doc['neg']])
+    except Exception as e:print(e)
     # Print the data of the 'prompt' field
     # for d in data:
     #     print(d)
