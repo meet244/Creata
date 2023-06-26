@@ -23,10 +23,10 @@ token=None
 version:str="35s5hfwn9n78gb06"
 counts:int=1
 
-# from flask_cors import CORS
+from flask_cors import CORS
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 
 
 def call(prompt:str="",neg="",model="art",token:str=None,version:str="35s5hfwn9n78gb06"):
