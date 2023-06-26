@@ -57,7 +57,7 @@
         });
 
         function passwordc(pass){
-            fetch('http://127.0.0.1:1523/pass', {
+            fetch(window.location.href+'/pass', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,7 +68,7 @@
                 .then(data => {
                     console.log(data)
                     if(data != ""){
-                        window.location.href = `http://127.0.0.1:1523/?code=${data}&type=home`;
+                        window.location.href = window.location.href+`/?code=${data}&type=home`;
                     }
                 })
                 .catch(error => {
