@@ -39,18 +39,19 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
       grid-gap: 10px;
     }
 
     .grid-item {
       position: relative;
       display: inline-block;
-      width: 200px; /* Adjust the width as needed */
+      width: 260px; /* Adjust the width as needed */
       margin: 10px; /* Adjust the margin as needed */
     }
 
     .grid-item img {
+      border-radius: 15px;
       max-width: 100%;
       max-height: 100%;
       transition: filter 0.3s, transform 0.3s;
@@ -76,10 +77,6 @@
     }
 
     .grid-item:hover .material-symbols-outlined {
-      opacity: 1;
-    }
-
-    .grid-item:hover .use-span {
       opacity: 1;
     }
 
@@ -229,13 +226,12 @@
     .use-span {
       cursor: pointer;
       position: absolute;
-      bottom: 5px; /* Adjust the distance from the bottom as needed */
+      bottom: -25px; /* Adjust the distance from the bottom as needed */
       left: 0;
-      opacity: 0;
+      opacity: 1;
       font-family: 'Brush Script MT', cursive;
       width: 100%;
       text-align: center;
-      background-color: rgba(0, 0, 0, 0.5); /* Adjust the background color as needed */
       color: #fff; /* Adjust the text color as needed */
       padding: 5px 0; /* Adjust the padding as needed */
       font-size: 14px; /* Adjust the font size as needed */
@@ -265,17 +261,22 @@
       z-index: 9999; /* Adjust the z-index as needed */
     }
 
-    .toast-container {
+    .toast-container{
       color:#ffffff;
-      font-size: 16px;
-      font-family: 'Brush Script MT', cursive;
       position: fixed;
       bottom: 30px;
       left: 50%;
-      padding: 16px;
-      border-radius: 8px;
       transform: translateX(-50%);
       z-index: 1;
+    }
+
+    .toast{
+      background-color: #4285F4;
+      font-size: 16px;
+      font-family: 'Brush Script MT', cursive;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 2px;
     }
 
   </style>
@@ -308,7 +309,6 @@
   <div class="grid" id="image-grid"></div>
 
   <script>
-    const oldcurrentURL = window.location.href;
     // Get the textarea element
     const textarea = document.getElementById('promptInput');
     const textarea2 = document.getElementById('negativePromptInput');
@@ -409,18 +409,20 @@
         });
     }
 
-    function toggleMode(mode) {
+    function toggleMode(m) {
       const generateButton = document.getElementById('generateButton');
+      mode = m
       const upscaleButton = document.getElementById('upscaleButton');
       const imageGrid = document.getElementById('image-grid');
 
       if (mode === 'generate') {
+        callTo = 'data'
         btn = document.getElementById('allButton');
         btn.innerText = 'Upscale All';
         generateButton.classList.add('active');
         upscaleButton.classList.remove('active');
 
-        fetch('../data')
+        fetch('./data')
           .then(response => response.json())
           .then(data => {
             imageGrid.innerHTML = '';
@@ -430,23 +432,29 @@
                 const gridItem = createGridItem(url,mode);
                 imageGrid.appendChild(gridItem);
               });
-            } else {
-              Object.reverse().values(data).forEach(url => {
-                const gridItem = createGridItem(url,mode);
-                imageGrid.appendChild(gridItem);  
-              });
+            } 
+            // else {
+            //   Object.reverse().values(data).forEach(url => {
+            //     const gridItem = createGridItem(url,mode);
+            //     imageGrid.appendChild(gridItem);  
+            //   });
+            // }
+            if(repeatstart == false){
+              repeatstart = true;
+              RepeatCall();
             }
           })
           .catch(error => {
             console.error('Error:', error);
           });
       } else if (mode === 'upscale') {
+        callTo = 'upgraded'
         btn = document.getElementById('allButton');
         btn.innerText = 'Download All';
         generateButton.classList.remove('active');
         upscaleButton.classList.add('active');
 
-        fetch('../upgraded')
+        fetch('./upgraded')
           .then(response => response.json())
           .then(data => {
             imageGrid.innerHTML = '';
@@ -455,6 +463,10 @@
               const gridItem = createGridItem(url, mode);
               imageGrid.appendChild(gridItem);
             });
+            if(repeatstart == false){
+              repeatstart = true;
+              RepeatCall();
+            }
           })
           .catch(error => {
             console.error('Error:', error);
@@ -599,7 +611,6 @@
     function Delete() {
       const generateButton = document.getElementById('generateButton');
       const upscaleButton = document.getElementById('upscaleButton');
-      const mode = generateButton.classList.contains('active') ? 'generate' : 'upscale';
 
       fetch(currentURL + '/delete', {
         method: 'POST',
@@ -627,7 +638,7 @@
       toastContainer.appendChild(toast);
 
       // Change background color to #4285F4
-      toastContainer.style.backgroundColor = '#4285F4';
+      // toastContainer.style.backgroundColor = '#4285F4';
 
       setTimeout(function () {
           toast.classList.add('show');
@@ -643,9 +654,40 @@
         }, 300);
       }
 
-      function sleep(ms) {
+    function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
       } 
+
+    async function RepeatCall(){
+      if(callTo == ''){return}
+      const imageGrid = document.getElementById('image-grid');
+
+      fetch('./'+callTo)
+          .then(response => response.json())
+          .then(data => {
+            if(imageGrid.childElementCount == data.length){
+              setTimeout(RepeatCall, 5000);
+              return
+            }
+            imageGrid.innerHTML = '';
+            if (Array.isArray(data)) {
+              data.reverse().forEach(url => {
+                const gridItem = createGridItem(url,mode);
+                imageGrid.appendChild(gridItem);
+              });
+            } else {
+              Object.reverse().values(data).forEach(url => {
+                const gridItem = createGridItem(url,mode);
+                imageGrid.appendChild(gridItem);  
+              });
+            }
+            setTimeout(RepeatCall, 5000);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            setTimeout(RepeatCall, 5000);
+          });
+    }
 
     async function DownloadOrUpscale(){
       const imageGrid = document.getElementById('image-grid');
@@ -662,10 +704,8 @@
       }
     }
 
-    // Initially, set the mode to "generate"
-    
     function toUpload(){
-      window.open(oldcurrentURL.replace('home','upload'), '_blank');
+      window.open(currentURL+'/upload', '_blank');
     }
 
     function generateUUID() {
@@ -685,6 +725,7 @@
     }
 
     // Call the function to clear URL query parameters
+    repeatstart = false
     clearURLParams();
     currentURL =  window.location.href;
     toggleMode('generate');
