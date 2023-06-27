@@ -56,6 +56,7 @@ def call(prompt:str="",neg="",model="art",token:str=None,version:str="35s5hfwn9n
     append_to_json(response.json()['images'],"data.json",model,prompt,neg)
 
 def append_to_json(data_list,filename,model,prompt,neg):
+    global d_col,u_col
 
     for i in data_list:
         data = {
@@ -72,6 +73,7 @@ def append_to_json(data_list,filename,model,prompt,neg):
         # col.update_one(document_query, {'$set': {'data' if 'data' in filename else 'upscale': [i,model,prompt,neg]}}, upsert=True)
 
 def remove_to_json(data_list,filename):
+    global d_col,u_col
 
     # col.delete_many({'_id': '64995bd76eb506bb6b9cb95f', 'data.0' if 'data' in filename else 'upscale.0': {'$in': data_list}})
 
@@ -132,13 +134,12 @@ def toUpgrade():
     return "ok"
     # remove_to_json([image_id],"data.json")
 
-key = ""
+key = str(uuid.uuid4())
 @app.route("/pass",methods=['POST'])
 def password():
     global key
     pas = request.json.get("code","")
     if(pas == "123"):
-        if(key == ""):key = str(uuid.uuid4())
         return jsonify(key)
     else: return jsonify("")
 
@@ -147,7 +148,6 @@ def home():
     global key
     name = request.args.get('code','')
     t = request.args.get('type','')
-    if(key == ""):key = str(uuid.uuid4())
     if (name == key):
         if(t=='upload'):
             return render_template('upload.html')
@@ -162,15 +162,15 @@ def data():
     # with open ("data.json") as d:
     #     data = d.read()
     #     d.close()
-    try:
-        data = []
-        all_docs = d_col.find()
-        for doc in all_docs:
-            if('model' in doc):
-                data.append([doc['file'],doc['model'],doc['prompt'],doc['neg']])
-            else:
-                data.append([doc['file'],'',doc['prompt'],doc['neg']])
-    except Exception as e:print(e)
+    # try:
+    data = []
+    all_docs = d_col.find()
+    for doc in all_docs:
+        if('model' in doc):
+            data.append([doc['file'],doc['model'],doc['prompt'],doc['neg']])
+        else:
+            data.append([doc['file'],'',doc['prompt'],doc['neg']])
+    # except Exception as e:print(e)
     # Print the data of the 'prompt' field
     # for d in data:
     #     print(d)
