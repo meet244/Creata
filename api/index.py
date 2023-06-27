@@ -123,7 +123,7 @@ def upgrade(image_id: str = "", prompt: str = "", version: str = "", model: str 
 
 @app.route("/upgrade", methods=["POST"])
 def toUpgrade():
-    global prompt,version,model,token,negative
+    global token,version
     image_id = request.json.get('image_id', '')
     print(image_id)
     docs = d_col.find_one({'file': image_id})
@@ -158,6 +158,7 @@ def home():
 
 @app.route("/data")
 def data():
+    global d_col
     # with open ("data.json") as d:
     #     data = d.read()
     #     d.close()
@@ -177,6 +178,7 @@ def data():
 
 @app.route("/upgraded")
 def upgraded():
+    global u_col
     # with open ("upgraded.json") as d:
     #     data = d.read()
     #     d.close()
