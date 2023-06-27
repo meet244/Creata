@@ -147,12 +147,17 @@ def password():
 def home():
     global key
     name = request.args.get('code','')
-    t = request.args.get('type','')
     if (name == key):
-        if(t=='upload'):
-            return render_template('upload.html')
-        else:
-            return render_template('new.html')
+        return render_template('new.html')
+    else:
+        return render_template('pass.html')
+
+@app.route("/upload")
+def upload():
+    global key
+    name = request.args.get('code','')
+    if (name == key):
+        return render_template('upload.html')
     else:
         return render_template('pass.html')
 
