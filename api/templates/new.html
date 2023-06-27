@@ -39,13 +39,14 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       grid-gap: 10px;
     }
 
     .grid-item {
       position: relative;
       display: inline-block;
+      justify-self: center;
       width: 260px; /* Adjust the width as needed */
       margin: 10px; /* Adjust the margin as needed */
     }
@@ -94,7 +95,7 @@
       border-radius: 4px;
       cursor: pointer;
       transition: background-color 0.3s;
-      font-family: 'Brush Script MT', cursive;
+      /* font-family: 'Brush Script MT', cursive; */
       font-weight: bold;
     }
 
@@ -110,7 +111,7 @@
     }
 
     .CancelButton{
-      font-family: 'Brush Script MT', cursive;
+      /* font-family: 'Brush Script MT', cursive; */
       display: inline-block;
       padding: 10px 20px;
       font-size: 16px;
@@ -229,7 +230,7 @@
       bottom: -25px; /* Adjust the distance from the bottom as needed */
       left: 0;
       opacity: 1;
-      font-family: 'Brush Script MT', cursive;
+      /* font-family: 'Brush Script MT', cursive; */
       width: 100%;
       text-align: center;
       color: #fff; /* Adjust the text color as needed */
@@ -273,12 +274,134 @@
     .toast{
       background-color: #4285F4;
       font-size: 16px;
-      font-family: 'Brush Script MT', cursive;
+      /* font-family: 'Brush Script MT', cursive; */
       padding: 16px;
       border-radius: 8px;
       margin: 2px;
     }
 
+    /* Mobile Styles */
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .grid-item {
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    margin: 25px;
+  }
+
+  .grid-item img {
+    border-radius: 20px;
+    max-width: 100%;
+    max-height: 100%;
+    transition: filter 0.3s, transform 0.3s;
+  }
+
+  .grid-item:hover img {
+    cursor: pointer;
+  }
+
+  .material-symbols-outlined {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 40px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-variation-settings: 'opsz' 40, 'wght' 400, 'FILL' 0, 'GRAD' 0;
+  }
+
+  .grid-item:hover .material-symbols-outlined {
+    opacity: 1;
+  }
+
+  .button-container {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  button {
+    background-color: rgba(25, 88, 224, 0);
+    border: 1px solid #ffffff;
+    color: white;
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    /* font-family: 'Brush Script MT', cursive; */
+    font-weight: bold;
+  }
+
+  .active {
+    color: #ffffff;
+    background-color: #4285F4;
+    padding: 12px 24px;
+    font-size: 40px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .CancelButton {
+    font-family: 'Brush Script MT', cursive;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    background-color: #4CAF50;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .prompt-container textarea {
+    font-size: 40px;
+    width: 100%;
+    width: 95vw;
+  }
+
+  #inputThreads {
+    width: 100px;
+    font-size: 40px;
+    margin: 10px;
+  }
+
+  .use-span{
+    font-size: 30px;
+    bottom: -50px;
+  }
+
+  .spinner-select{
+    font-size: 40px;
+  }
+
+  #allButton, #createButton, #loadButton, #deleteButton{
+    font-size: 40px;
+  }
+  
+  button{
+    margin: 10px;
+    font-size: 40px;
+  }
+
+  .toast{
+    font-size: 40px;
+  }
+}
   </style>
 </head>
 <body style="background-color: #12151E;overflow-x: hidden;">
@@ -439,6 +562,7 @@
             //     imageGrid.appendChild(gridItem);  
             //   });
             // }
+            handleTextareaResize();
             if(repeatstart == false){
               repeatstart = true;
               RepeatCall();
@@ -463,6 +587,7 @@
               const gridItem = createGridItem(url, mode);
               imageGrid.appendChild(gridItem);
             });
+            handleTextareaResize();
             if(repeatstart == false){
               repeatstart = true;
               RepeatCall();
