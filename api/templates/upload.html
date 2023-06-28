@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>   
-    <title>Generate</title>
+    <title>Upload</title>
     <style>
         body {
             display: flex;
@@ -114,7 +114,7 @@
         <div class="image"></div>
         <div class="buttons">
             <textarea id="input"></textarea>
-            <button class="back-button" onclick="back()">Generate</button>
+            <button class="back-button" onclick="done()">Done</button>
             <button class="copy-button" onclick="copyit()">Copy</button>
             <button class="re-button" onclick="reCaption()">Re-Caption</button>
             <button class="danger-button" onclick="danger()">Danger</button>
@@ -129,7 +129,7 @@
         
         // Function to fetch images from the URL
         function fetchImages() {
-            fetch('http://127.0.0.1:1523/load1', {
+            fetch('/caption', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -155,7 +155,7 @@
             textarea.value = images[currentImageIndex].data
             const imag = document.createElement('img');
 
-            const imgSrc = `http://127.0.0.1:1523/image/${images[currentImageIndex].name}`;
+            const imgSrc = `/image/${images[currentImageIndex].name}`;
             imag.setAttribute('src', imgSrc);
             
             while (imageElement.firstChild) {
@@ -211,7 +211,7 @@
         fetchImages();
 
         function danger(){
-            fetch('http://127.0.0.1:1523/uploadDanger', {
+            fetch('/uploadDanger', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -231,7 +231,7 @@
         }
 
         function reCaption(){
-            fetch('http://127.0.0.1:1523/uploadRecaption', {
+            fetch('/uploadRecaption', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -252,13 +252,24 @@
         function copyit(){
             copyToClipboard(textarea.value);
         }
-        function back(){
-            // window.location.href = 'http://127.0.0.1:1523/';
-            // console.log(currentURL)
-            // window.location.href = currentURL + '&type=upload';
-            // console.log(window.location.pathname)
-            window.location.href = currentURL.replace('upload','home') ;
-            // window.location.href = 'http://127.0.0.1:1523/window.location.pathname';
+        function done(){
+            fetch('/uploaddone', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({image:images[currentImageIndex].name})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data == "ok"){
+                    images.splice(currentImageIndex,1)
+                    updateImage();
+                }
+            })
+            .catch(error => {
+                console.log('Error fetching images:', error);
+            });
         }
 
         function copyToClipboard(text) {
