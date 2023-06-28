@@ -2,9 +2,10 @@ import requests
 import json
 import uuid
 import threading
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, send_file
 from pymongo.mongo_client import MongoClient
 from pymongo import MongoClient
+import gridfs
 
 CONNECTION_STRING = "mongodb+srv://meet2005pokar:BUhCWuglqb4tCP4E@cluster0.tnvbure.mongodb.net/?retryWrites=true&w=majority"
 
@@ -13,6 +14,7 @@ client = MongoClient(CONNECTION_STRING)
 
 
 db = client['db']
+fs = gridfs.GridFS(db)
 d_col = db['data']
 u_col = db['upscale']
 
@@ -173,8 +175,7 @@ def data():
     for doc in all_docs:
         if('model' in doc):
             data.append([doc['file'],doc['model'],doc['prompt'],doc['neg']])
-        else:
-            data.append([doc['file'],'',doc['prompt'],doc['neg']])
+    return jsonify(data)
     # except Exception as e:print(e)
     # Print the data of the 'prompt' field
     # for d in data:
@@ -230,6 +231,62 @@ def delete():
         #     json.dump(data, file)
         #     file.close()
     return jsonify("ok")
+
+@app.route('/image/<image_name>')
+def retrieve_and_send_image(image_name):
+    global db,fs
+    collection = db['caption']
+    document = collection.find_one({'image_name': image_name})
+    if document:
+        image_id = document['image_id']
+        image = fs.get(image_id)
+        return send_file(image, mimetype='image/png')  # Adjust mimetype based on your image type
+    else:
+        return 'Image not found'
+
+@app.route('/caption',methods=['POST'])
+def captions():
+    global db
+    coll = db['caption']
+    data = {}
+    all_docs = coll.find({'status':'wait'})
+    for doc in all_docs:
+        data[doc['image_name']] = doc['caption']
+    return jsonify(data)
+    
+@app.route('/uploadDanger')
+def danger():
+    global db
+    img = request.json.get("image",'')
+    coll = db['caption']
+    result = coll.update_one({'image_name': img}, {'$set': {'status': 'danger'}})
+    if result.modified_count > 0:
+        return jsonify('ok')
+    else:
+        return jsonify({'Image not found'})
+
+@app.route('/uploadRecaption')
+def recaptions():
+    global db
+    img = request.json.get("image",'')
+    coll = db['caption']
+    result = coll.update_one({'image_name': img}, {'$set': {'status': 'recaption'}})
+    if result.modified_count > 0:
+        return jsonify('ok')
+    else:
+        return jsonify({'Image not found'})
+
+
+@app.route('/uploaddone')
+def uploaddone():
+    global db
+    img = request.json.get("image",'')
+    coll = db['caption']
+    result = coll.update_one({'image_name': img}, {'$set': {'status': 'done'}})
+    if result.modified_count > 0:
+        return jsonify('ok')
+    else:
+        return jsonify({'Image not found'})
 
 prompt = "The female bollywood actress's captivating journey led her to a whimsical garden with her beautiful face smiling, bursting with vibrant blooms and delightful creatures. Envision her childlike wonder and genuine happiness, as she discovers a hidden nook and playfully strikes a cute pose, leaving her fans in awe."
 
