@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Creata - AI image Generator</title>
+
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+
+  <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+  <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+  <style>
+    .io-toggler {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      font: 20px/1.5 sans-serif;
+      /* background: url(https://i.stack.imgur.com/XVCAQ.png); */
+      background-color: #006cff;
+      color: #fff;
+      border: 4px solid transparent;
+      border-radius: 50px;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    .io-options {
+      border-radius: 50px;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+    }
+
+    .io-options span {
+      position: relative;
+      text-align: center;
+      display: inline-block;
+      padding: 3px 35px;
+      font-weight: bold;
+    }
+
+    /* the jQ clone */
+    .io-options+.io-options {
+      position: absolute;
+      background: #fff;
+      width: 50%;
+      height: 100%;
+      white-space: nowrap;
+    }
+
+    .io-options+.io-options span {
+      color: #006cff;
+    }
+  </style>
+
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+    }
+
+    .main0 {
+      margin-top: 60px;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .centered-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 70%;
+      transform: translate(-50%, -45%);
+      color: #182A34;
+      font-size: 17px;
+      text-align: center;
+    }
+
+    .centered-text h1 {
+      font-size: 60px;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .centered-text h5 {
+      margin: 30px 0 0 20%;
+      width: 60%;
+      font-size: 18px;
+      font-weight: normal;
+    }
+
+    .centered-text button {
+      margin: 50px 0 0 0;
+      /* width: 60%; */
+      font-size: 20px;
+      padding: 17px;
+      border-radius: 15px;
+      font-weight: normal;
+    }
+
+    /* Reset some default styles for list items */
+    ul,
+    li {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Style the navbar */
+    .navbar {
+      height: 40px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffffffee;
+      background-color: #182a34f2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      /* Ensure the navbar is above other elements */
+    }
+
+    .menu {
+      margin-right: 7%;
+    }
+
+    /* Style the logo */
+    .logo img {
+      margin-top: 5px;
+      margin-left: 80%;
+      max-width: 100px;
+      height: auto;
+    }
+
+    /* Style the menu items */
+    .menu a {
+      text-decoration: none;
+      color: #ffffff;
+      margin-right: 40px;
+      transition: color 0.3s;
+    }
+
+    .menu a:hover {
+      color: #c7e8fa;
+    }
+  </style>
+
+  <style>
+    .main11 {
+      background-color: white;
+      padding: 175px 80px;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      font-size: 17px;
+    }
+
+    .main11 h2 {
+      margin-top: 0;
+      font-size: 30px;
+      font-weight: normal;
+    }
+
+    .main11 img {
+      max-width: 540px;
+      border-radius: 20px;
+
+    }
+
+    .main11 div {
+      margin-top: 0px;
+      margin-left: 10%;
+    }
+
+    .main3 {
+      margin-bottom: 115px;
+      margin-top: -50px;
+      text-align: center;
+    }
+
+    .main3 video {
+      width: 650px;
+
+      border-radius: 40px;
+    }
+
+    .main3 h1 {
+      font-weight: normal;
+      font-size: 60px;
+    }
+  </style>
+
+  <style>
+    /* For WebKit-based browsers (e.g., Chrome, Safari) */
+    ::-webkit-scrollbar {
+      width: 12px;
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #182A34;
+      border-radius: 6px;
+    }
+
+    * {
+      font-family: 'Brush Script MT', cursive;
+      scrollbar-color: transparent transparent;
+      scrollbar-track-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* For Microsoft Edge and Internet Explorer */
+    /* Note: Internet Explorer does not support customizing the scrollbar */
+    /* These properties will only affect Microsoft Edge (EdgeHTML engine) */
+    /* The thumb styling will still be applied */
+    @supports (-ms-overflow-style: none) {
+
+      /* Remove the default scrollbar */
+      ::-ms-scrollbar {
+        width: 0;
+        height: 0;
+      }
+
+      /* Style the thumb */
+      ::-ms-scrollbar-thumb {
+        background-color: rgb(10, 201, 96);
+        border-radius: 6px;
+      }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-gap: 10px;
+    }
+
+    .grid-item {
+      position: relative;
+      display: inline-block;
+      justify-self: center;
+      width: 260px;
+      /* Adjust the width as needed */
+      margin: 10px;
+      /* Adjust the margin as needed */
+    }
+
+    .grid-item img {
+      border-radius: 15px;
+      max-width: 100%;
+      max-height: 100%;
+      transition: filter 0.3s, transform 0.3s;
+    }
+
+    .grid-item:hover img {
+      filter: brightness(70%);
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+
+    .material-symbols-outlined {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 48px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-variation-settings: 'opsz' 48, 'wght' 400, 'FILL' 0, 'GRAD' 0;
+    }
+
+    .grid-item:hover .material-symbols-outlined {
+      opacity: 1;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #182A34;
+      border: 1px solid #ffffff;
+      color: white;
+      padding: 9px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-family: 'Brush Script MT', cursive;
+      /* font-weight: bold; */
+    }
+
+    .active {
+      color: #ffffff;
+      background-color: #4285F4;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .CancelButton {
+      /* font-family: 'Brush Script MT', cursive; */
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 4px;
+      background-color: #4CAF50;
+      color: #000000;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .prompt-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .prompt-container textarea {
+      color: black;
+      background-color: rgb(34, 40, 57);
+      background-color: white;
+      caret-color: black;
+      display: block;
+      margin: 0 auto 10px;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      width: 80%;
+      /* Adjust the width as needed */
+    }
+
+    .spinner-container {
+      text-align: center;
+    }
+
+    .spinner-select {
+      border: none;
+      color: rgb(0, 0, 0);
+      background-color: rgb(255, 255, 255);
+      caret-color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      padding: 8px;
+    }
+
+    #createButton {
+      /* background-color: #182A34;
+  color: #ffffff; */
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      /* border-radius: 4px; */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #deleteButton {
+      /* background-color: #182A34;
+  color: #ffffff; */
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      /* border-radius: 4px; */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #allButton {
+      /* background-color: #182A34;
+  color: #ffffff; */
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      /* border-radius: 4px; */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #loadButton {
+      /* background-color: #182A34;
+  color: #ffffff; */
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      /* border-radius: 4px; */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    /* #inputThreads {
+      border: none;
+      color: black;
+      background-color: rgb(255, 255, 255);
+      caret-color: black;
+      font-size: 16px;
+      padding: 8px;
+      border-radius: 5px;
+      margin-right: 10px;
+      width: 100px;
+    } */
+
+    .auto-resize {
+      overflow: hidden;
+      resize: none;
+      min-height: 40px;
+      /* Set a minimum height for the textarea */
+    }
+
+    .use-span {
+      cursor: pointer;
+      position: absolute;
+      bottom: -25px;
+      /* Adjust the distance from the bottom as needed */
+      left: 0;
+      opacity: 1;
+      /* font-family: 'Brush Script MT', cursive; */
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      color: #1d1d1d;
+      /* Adjust the text color as needed */
+      padding: 5px 0;
+      /* Adjust the padding as needed */
+      font-size: 14px;
+      /* Adjust the font size as needed */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 2em;
+      transition: max-height 0.3s ease;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.75);
+      /* Adjust the background color and opacity as needed */
+      z-index: 9998;
+      /* Adjust the z-index as needed */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .highlighted-image {
+      max-width: 90vw;
+      max-height: 90vh;
+      z-index: 9999;
+      /* Adjust the z-index as needed */
+    }
+
+    .toast-container {
+      color: #ffffff;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .toast {
+      background-color: #4285F4;
+      font-size: 16px;
+      /* font-family: 'Brush Script MT', cursive; */
+      padding: 16px;
+      border-radius: 8px;
+      margin: 2px;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 1080px) {
+      .grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+
+      .grid-item {
+        display: flex;
+        justify-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 300px;
+        margin: 25px;
+      }
+
+      .grid-item img {
+        border-radius: 20px;
+        max-width: 100%;
+        max-height: 100%;
+        transition: filter 0.3s, transform 0.3s;
+      }
+
+      .grid-item:hover img {
+        cursor: pointer;
+      }
+
+      .material-symbols-outlined {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-size: 40px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-variation-settings: 'opsz' 40, 'wght' 400, 'FILL' 0, 'GRAD' 0;
+      }
+
+      .grid-item:hover .material-symbols-outlined {
+        opacity: 1;
+      }
+
+      .button-container {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      button {
+        background-color: #182A34;
+        border: 1px solid #ffffff;
+        color: white;
+        padding: 12px 24px;
+        font-size: 18px;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-family: 'Brush Script MT', cursive;
+        /* font-weight: bold; */
+      }
+
+      .active {
+        color: #ffffff;
+        background-color: #4285F4;
+        padding: 12px 24px;
+        font-size: 40px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .CancelButton {
+        font-family: 'Brush Script MT', cursive;
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 6px;
+        background-color: #4CAF50;
+        color: #000000;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .prompt-container textarea {
+        font-size: 40px;
+        width: 100%;
+        width: 95vw;
+      }
+
+      /* #inputThreads {
+        width: 200px;
+        font-size: 40px;
+        margin: 10px;
+      } */
+
+      .use-span {
+        font-size: 30px;
+        bottom: -50px;
+      }
+
+      .spinner-select {
+        font-size: 40px;
+      }
+
+      #allButton,
+      #createButton,
+      #loadButton,
+      #deleteButton {
+        font-size: 40px;
+      }
+
+      button {
+        margin: 10px;
+        font-size: 40px;
+      }
+
+      .toast {
+        font-size: 40px;
+      }
+
+      .io-options span {
+        font-size: 40px;
+      }
+
+      .main0 {
+        height: 135vh;
+      }
+
+      .centered-text {
+        font-size: 45px;
+        width: 95%;
+      }
+
+      .centered-text h1 {
+        font-size: 90px;
+        margin: 0;
+        font-weight: 500;
+      }
+
+      .centered-text h5 {
+        margin: 30px 0 0 10%;
+        width: 80%;
+        font-size: 35px;
+        font-weight: normal;
+      }
+
+      .centered-text button {
+        margin: 50px 0 0 0;
+        /* width: 60%; */
+        font-size: 50px;
+        padding: 27px;
+        border-radius: 15px;
+        font-weight: normal;
+      }
+
+      .main0 video {
+        width: auto;
+        transform: translate(-600px, 0px);
+      }
+
+      .navbar {
+        height: 110px;
+        font-size: 30px;
+      }
+
+      .navbar img {
+        margin-left: 20%;
+        max-width: 170px;
+      }
+
+      .main11 {
+        flex-direction: column;
+      }
+
+      .main11 img {
+        min-width: 710px;
+        flex-direction: column;
+      }
+
+      .main11 div {
+        padding: 30px;
+        margin-left: 0;
+      }
+
+      .main11 h2 {
+        font-size: 45px;
+      }
+
+      .main11 p {
+        font-size: 25px;
+      }
+
+      .main3 video {
+        width: 850px;
+      }
+
+    }
+  </style>
+
+  <style>
+    .main2 {
+      text-align: center;
+      height: max-content;
+      padding: 10px;
+      padding-bottom: 100px;
+      background-image: linear-gradient(165deg, #ecaac5b9, #9CCBE5 54%, #ffffff 142%);
+      background-image: linear-gradient(165deg, #f9d6e4, #c1e9ff 54%, #DEF8EA 90%);
+    }
+
+    .main2 h2 {
+      margin: 40px 25px;
+      font-size: 60px;
+      font-weight: normal;
+      color: #182A34;
+    }
+
+    .btns {
+      margin-top: 15px;
+    }
+  </style>
+
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .pg-footer {
+      font-family: 'Roboto', sans-serif;
+    }
+
+
+    .footer {
+      background-color: #22343d;
+      color: #fff;
+    }
+
+    .footer-wave-svg {
+      background-color: transparent;
+      background-color: #22343d;
+      display: block;
+      height: 30px;
+      position: relative;
+      top: -1px;
+      width: 100%;
+    }
+
+    .footer-wave-path {
+      fill: #def8ea;
+      ;
+    }
+
+    .footer-content {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 1230px;
+      padding: 40px 15px 450px;
+      position: relative;
+    }
+
+    .footer-content-column {
+      box-sizing: border-box;
+      float: left;
+      padding-left: 15px;
+      padding-right: 15px;
+      width: 100%;
+      color: #fff;
+    }
+
+    .footer-content-column ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer-logo-link {
+      display: inline-block;
+    }
+
+    .footer-menu {
+      margin-top: 30px;
+    }
+
+    .footer-menu-name {
+      color: #fffff2;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: .1em;
+      line-height: 18px;
+      margin-bottom: 0;
+      margin-top: 0;
+      text-transform: uppercase;
+    }
+
+    .footer-menu-list {
+      list-style: none;
+      margin-bottom: 0;
+      margin-top: 10px;
+      padding-left: 0;
+    }
+
+    .footer-menu-list li {
+      margin-top: 5px;
+    }
+
+    .footer-call-to-action-description {
+      color: #fff;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .footer-call-to-action-button:hover {
+      color: #1d1d1d;
+    }
+
+    .button:last-of-type {
+      margin-right: 0;
+    }
+
+    .footer-call-to-action-button {
+      background-image: linear-gradient(165deg, #f9d6e4, #c1e9ff 72%);
+      border-radius: 21px;
+      color: #1d1d1d;
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .1em;
+      line-height: 18px;
+      padding: 12px 30px;
+      margin: 0 10px 10px 0;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background-color .2s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .footer-call-to-action {
+      margin-top: 30px;
+    }
+
+    .footer-call-to-action-title {
+      color: #fffff2;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .1em;
+      line-height: 18px;
+      margin-bottom: 0;
+      margin-top: 0;
+      text-transform: uppercase;
+    }
+
+    .footer-call-to-action-link-wrapper {
+      margin-bottom: 0;
+      margin-top: 10px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer-call-to-action-link-wrapper a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+
+
+
+
+    .footer-social-links {
+      bottom: 0;
+      height: 54px;
+      position: absolute;
+      right: 0;
+      width: 236px;
+    }
+
+    .footer-social-amoeba-svg {
+      height: 54px;
+      left: 0;
+      display: block;
+      position: absolute;
+      top: 0;
+      width: 236px;
+    }
+
+    .footer-social-amoeba-path {
+      fill: #c1e9ff;
+    }
+
+    .footer-social-link.linkedin {
+      height: 26px;
+      left: 3px;
+      top: 11px;
+      width: 26px;
+    }
+
+    .footer-social-link {
+      display: block;
+      padding: 10px;
+      position: absolute;
+    }
+
+    .hidden-link-text {
+      position: absolute;
+      clip: rect(1px 1px 1px 1px);
+      clip: rect(1px, 1px, 1px, 1px);
+      -webkit-clip-path: inset(0px 0px 99.9% 99.9%);
+      clip-path: inset(0px 0px 99.9% 99.9%);
+      overflow: hidden;
+      height: 1px;
+      width: 1px;
+      padding: 0;
+      border: 0;
+      top: 50%;
+    }
+
+    .footer-social-icon-svg {
+      display: block;
+    }
+
+    .footer-social-icon-path {
+      fill: #182A34;
+      transition: fill .2s;
+    }
+
+    .footer-social-link.twitter {
+      height: 28px;
+      left: 62px;
+      top: 3px;
+      width: 28px;
+    }
+
+    .footer-social-link.youtube {
+      height: 24px;
+      left: 123px;
+      top: 12px;
+      width: 24px;
+    }
+
+    .footer-social-link.github {
+      height: 34px;
+      left: 172px;
+      top: 7px;
+      width: 34px;
+    }
+
+    .footer-copyright {
+      background-image: linear-gradient(165deg, #f9d6e4, #c1e9ff 72%);
+      color: #fff;
+      padding: 15px 30px;
+      text-align: center;
+    }
+
+    .footer-copyright-wrapper {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 1200px;
+    }
+
+    .footer-copyright-text {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 18px;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+
+    .footer-copyright-link {
+      color: #1d1d1d;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+
+
+
+
+
+
+    /* Media Query For different screens */
+    @media (min-width:320px) and (max-width:479px) {
+
+      /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+      .footer-content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1230px;
+        padding: 40px 15px 1050px;
+        position: relative;
+      }
+    }
+
+    @media (min-width:480px) and (max-width:599px) {
+
+      /* smartphones, Android phones, landscape iPhone */
+      .footer-content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1230px;
+        padding: 40px 15px 1050px;
+        position: relative;
+      }
+    }
+
+    @media (min-width:600px) and (max-width: 800px) {
+
+      /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+      .footer-content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1230px;
+        padding: 40px 15px 1050px;
+        position: relative;
+      }
+    }
+
+    @media (min-width:801px) {
+      /* tablet, landscape iPad, lo-res laptops ands desktops */
+
+    }
+
+    @media (min-width:1025px) {
+      /* big landscape tablets, laptops, and desktops */
+
+    }
+
+    @media (min-width:1281px) {
+      /* hi-res laptops and desktops */
+
+    }
+
+
+
+
+    @media (min-width: 760px) {
+      .footer-content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1230px;
+        padding: 40px 15px 450px;
+        position: relative;
+      }
+
+      .footer-wave-svg {
+        height: 50px;
+      }
+
+      .footer-content-column {
+        width: 24.99%;
+      }
+    }
+
+    @media (min-width: 568px) {
+      /* .footer-content-column {
+      width: 49.99%;
+  } */
+    }
+  </style>
+
+</head>
+
+<body style="overflow-x: hidden;">
+  <div id="toastContainer" class="toast-container"></div>
+
+
+  <div class="navbar">
+    <div class="logo">
+      <a href="#"><img src="/static/logo.png" alt="Logo"></a>
+    </div>
+    <div class="menu">
+      <a href="#m11">What's This</a>
+      <a href="#m2">Create</a>
+      <a href="#">About</a>
+    </div>
+  </div>
+
+  <div class="main0">
+    <video autoplay loop muted playsinline>
+      <source src="/static/vid.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="centered-text">
+      Generative AI
+      <h1>Make your imagination come true with the power of AI</h1>
+      <h5>Discover a whole new world of AI-generated images that spring to life with just your words. Describe your
+        vision, and let AI bring it to reality effortlessly.</h5>
+      <a href="#m2"><button>Start Creating</button></a>
+    </div>
+  </div>
+
+  <h2 id="m11"></h2>
+  <div class="main11">
+    <img src="/static/connect.png" alt="Your Image">
+    <div>
+      <h2>What is Creata?</h2>
+      <p>
+        Let me introduce you to Creata - my latest project. It's the place where I put my API scraping skills to work!
+        I've gone ahead and scraped the API of this super cool AI image generative model, and guess what? I have made it
+        available for all to use it for free and no time constraints!!
+        <br><br>
+        It's like magic! So now, you've got the power to come up some seriously stunning images using Creata. ✨📸
+        <br>
+        Let's get creative! 🎨💥
+      </p>
+
+    </div>
+  </div>
+
+  <div class="main3">
+    <h1>Let's Take a look</h1>
+    <video src="/static/Creata.mp4" autoplay loop muted playsinline></video>
+  </div>
+
+  <h2 id="m2"></h2>
+  <div class="main2">
+    <h2>Here's the thing</h2>
+    <div class="button-container">
+      <div class="prompt-container">
+        <textarea id="promptInput" placeholder="Prompt" class="auto-resize"></textarea>
+        <textarea id="negativePromptInput" placeholder="Negative Prompt" class="auto-resize"></textarea>
+        <div class="spinner-container">
+          <select id="spinnerSelect" class="spinner-select">
+            <option value="art">art</option>
+            <option value="drawing">drawing</option>
+            <option value="photo">photo</option>
+            <option value="none">none</option>
+          </select>
+          <!-- <input type="text" id="inputThreads" placeholder="Threads" inputmode="numeric" pattern="[0-9]*" /> -->
+          <button id="createButton" onclick="saveData()">Create</button>
+        </div>
+      </div>
+
+      <span class="io-toggler" data-io="0">
+        <span class="io-options">
+          <span>Generate</span>
+          <span>Upscale</span>
+        </span>
+      </span>
+      <br>
+
+      <div class="btns">
+        <!-- <button id="loadButton" onclick="loadData()">Refresh</button> -->
+        <button id="deleteButton" onclick="Delete()">Delete All</button>
+        <button id="allButton" onclick="DownloadOrUpscale()">Download All</button>
+      </div>
+    </div>
+    <div class="grid" id="image-grid"></div>
+  </div>
+
+
+
+  <div class="pg-footer">
+    <footer class="footer">
+      <svg class="footer-wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 100" preserveAspectRatio="none">
+        <path class="footer-wave-path"
+          d="M851.8,100c125,0,288.3-45,348.2-64V0H0v44c3.7-1,7.3-1.9,11-2.9C80.7,22,151.7,10.8,223.5,6.3C276.7,2.9,330,4,383,9.8 c52.2,5.7,103.3,16.2,153.4,32.8C623.9,71.3,726.8,100,851.8,100z">
+        </path>
+      </svg>
+      <div class="footer-content">
+        <div class="footer-content-column">
+          <div class="footer-logo">
+            <a class="footer-logo-link" href="#">
+              <span class="hidden-link-text">LOGO</span>
+              <!-- <h1>LOGO</h1> -->
+              <img id="btmlogo" style="width: 150px;" src="/static/l2.png" alt="CREATA">
+            </a>
+          </div>
+          <div class="footer-menu">
+            <h2 class="footer-menu-name"> Explore</h2>
+            <ul id="menu-get-started" class="footer-menu-list">
+              <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                <a href="#">What's this</a>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                <a href="#m11">Create</a>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-product">
+                <a href="#m2">About</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-content-column">
+          <div class="footer-menu">
+            <h2 class="footer-menu-name"> Follow</h2>
+            <ul id="menu-company" class="footer-menu-list">
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <a href="https://www.linkedin.com/in/meet-patel-90416b226/">Linkedin</a>
+              </li>
+              <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+                <a href="https://github.com/meet244">Github</a>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <a href="https://www.instagram.com/meetpatel_2801/">Instagram</a>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <a
+                  href="https://www.facebook.com/people/Meet-Patel/pfbid0QCGn9JBFtYN56VtasXDsxo1sV7Vnk5SZimLt2PSDiGJBJw4DYXJpzXpp1neGAWY4l/">Facebook</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-menu">
+            <h2 class="footer-menu-name"> MORE</h2>
+            <ul id="menu-legal" class="footer-menu-list">
+              <li
+                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-170434">
+                <a href="https://github.com/meet244/Creata">Star this 🌟</a>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <a href="https://github.com/meet244/Creata">Know more 💖</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-content-column">
+          <div class="footer-menu">
+            <h2 class="footer-menu-name"> More Projects</h2>
+            <ul id="menu-quick-links" class="footer-menu-list">
+              <li class="menu-item menu-item-type-custom menu-item-object-custom">
+                <a target="_blank" rel="noopener noreferrer"
+                  href="https://github.com/meet244/Sign-Language-Translator">Sign Language Translator</a>
+              </li>
+              <li class="menu-item menu-item-type-custom menu-item-object-custom">
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/meet244/ZARA">ZARA AI</a>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <a href="https://github.com/meet244/Atten">Atten app</a>
+              </li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                <a href="https://github.com/meet244/Interia">Interia</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-content-column">
+          <div class="footer-call-to-action">
+            <h2 class="footer-call-to-action-title"> Let's Chat</h2>
+            <p class="footer-call-to-action-description"> Have a support question?</p>
+            <a class="footer-call-to-action-button button" href="#" target="_self"> Get in Touch </a>
+          </div>
+          <div class="footer-call-to-action">
+            <h2 class="footer-call-to-action-title"> Talk to Us</h2>
+            <p class="footer-call-to-action-link-wrapper"> <a class="footer-call-to-action-link"
+                href="tel:+91 8879109025" target="_self"> +91 8879109025 </a></p>
+          </div>
+        </div>
+        <div class="footer-social-links"> <svg class="footer-social-amoeba-svg" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 236 54">
+            <path class="footer-social-amoeba-path"
+              d="M223.06,43.32c-.77-7.2,1.87-28.47-20-32.53C187.78,8,180.41,18,178.32,20.7s-5.63,10.1-4.07,16.7-.13,15.23-4.06,15.91-8.75-2.9-6.89-7S167.41,36,167.15,33a18.93,18.93,0,0,0-2.64-8.53c-3.44-5.5-8-11.19-19.12-11.19a21.64,21.64,0,0,0-18.31,9.18c-2.08,2.7-5.66,9.6-4.07,16.69s.64,14.32-6.11,13.9S108.35,46.5,112,36.54s-1.89-21.24-4-23.94S96.34,0,85.23,0,57.46,8.84,56.49,24.56s6.92,20.79,7,24.59c.07,2.75-6.43,4.16-12.92,2.38s-4-10.75-3.46-12.38c1.85-6.6-2-14-4.08-16.69a21.62,21.62,0,0,0-18.3-9.18C13.62,13.28,9.06,19,5.62,24.47A18.81,18.81,0,0,0,3,33a21.85,21.85,0,0,0,1.58,9.08,16.58,16.58,0,0,1,1.06,5A6.75,6.75,0,0,1,0,54H236C235.47,54,223.83,50.52,223.06,43.32Z">
+            </path>
+          </svg>
+          <a class="footer-social-link linkedin" href="https://www.linkedin.com/in/meet-patel-90416b226/"
+            target="_blank">
+            <span class="hidden-link-text">Linkedin</span>
+            <svg class="footer-social-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+              <path class="footer-social-icon-path"
+                d="M9,25H4V10h5V25z M6.501,8C5.118,8,4,6.879,4,5.499S5.12,3,6.501,3C7.879,3,9,4.121,9,5.499C9,6.879,7.879,8,6.501,8z M27,25h-4.807v-7.3c0-1.741-0.033-3.98-2.499-3.98c-2.503,0-2.888,1.896-2.888,3.854V25H12V9.989h4.614v2.051h0.065 c0.642-1.18,2.211-2.424,4.551-2.424c4.87,0,5.77,3.109,5.77,7.151C27,16.767,27,25,27,25z">
+              </path>
+            </svg>
+          </a>
+          <a class="footer-social-link twitter" href="https://twitter.com/" target="_blank">
+            <span class="hidden-link-text">Twitter</span>
+            <svg class="footer-social-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
+              <path class="footer-social-icon-path"
+                d="M 25.855469 5.574219 C 24.914063 5.992188 23.902344 6.273438 22.839844 6.402344 C 23.921875 5.75 24.757813 4.722656 25.148438 3.496094 C 24.132813 4.097656 23.007813 4.535156 21.8125 4.769531 C 20.855469 3.75 19.492188 3.113281 17.980469 3.113281 C 15.082031 3.113281 12.730469 5.464844 12.730469 8.363281 C 12.730469 8.773438 12.777344 9.175781 12.867188 9.558594 C 8.503906 9.339844 4.636719 7.246094 2.046875 4.070313 C 1.59375 4.847656 1.335938 5.75 1.335938 6.714844 C 1.335938 8.535156 2.261719 10.140625 3.671875 11.082031 C 2.808594 11.054688 2 10.820313 1.292969 10.425781 C 1.292969 10.449219 1.292969 10.46875 1.292969 10.492188 C 1.292969 13.035156 3.101563 15.15625 5.503906 15.640625 C 5.0625 15.761719 4.601563 15.824219 4.121094 15.824219 C 3.78125 15.824219 3.453125 15.792969 3.132813 15.730469 C 3.800781 17.8125 5.738281 19.335938 8.035156 19.375 C 6.242188 20.785156 3.976563 21.621094 1.515625 21.621094 C 1.089844 21.621094 0.675781 21.597656 0.265625 21.550781 C 2.585938 23.039063 5.347656 23.90625 8.3125 23.90625 C 17.96875 23.90625 23.25 15.90625 23.25 8.972656 C 23.25 8.742188 23.246094 8.515625 23.234375 8.289063 C 24.261719 7.554688 25.152344 6.628906 25.855469 5.574219 ">
+              </path>
+            </svg>
+          </a>
+          <a class="footer-social-link youtube" href="https://youtube.com/" target="_blank">
+            <span class="hidden-link-text">Youtube</span>
+            <svg class="footer-social-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+              <path class="footer-social-icon-path"
+                d="M 15 4 C 10.814 4 5.3808594 5.0488281 5.3808594 5.0488281 L 5.3671875 5.0644531 C 3.4606632 5.3693645 2 7.0076245 2 9 L 2 15 L 2 15.001953 L 2 21 L 2 21.001953 A 4 4 0 0 0 5.3769531 24.945312 L 5.3808594 24.951172 C 5.3808594 24.951172 10.814 26.001953 15 26.001953 C 19.186 26.001953 24.619141 24.951172 24.619141 24.951172 L 24.621094 24.949219 A 4 4 0 0 0 28 21.001953 L 28 21 L 28 15.001953 L 28 15 L 28 9 A 4 4 0 0 0 24.623047 5.0546875 L 24.619141 5.0488281 C 24.619141 5.0488281 19.186 4 15 4 z M 12 10.398438 L 20 15 L 12 19.601562 L 12 10.398438 z">
+              </path>
+            </svg>
+          </a>
+          <a class="footer-social-link github" href="https://github.com/meet244" target="_blank">
+            <span class="hidden-link-text">Github</span>
+            <svg class="footer-social-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+              <path class="footer-social-icon-path"
+                d="M 16 4 C 9.371094 4 4 9.371094 4 16 C 4 21.300781 7.4375 25.800781 12.207031 27.386719 C 12.808594 27.496094 13.027344 27.128906 13.027344 26.808594 C 13.027344 26.523438 13.015625 25.769531 13.011719 24.769531 C 9.671875 25.492188 8.96875 23.160156 8.96875 23.160156 C 8.421875 21.773438 7.636719 21.402344 7.636719 21.402344 C 6.546875 20.660156 7.71875 20.675781 7.71875 20.675781 C 8.921875 20.761719 9.554688 21.910156 9.554688 21.910156 C 10.625 23.746094 12.363281 23.214844 13.046875 22.910156 C 13.15625 22.132813 13.46875 21.605469 13.808594 21.304688 C 11.144531 21.003906 8.34375 19.972656 8.34375 15.375 C 8.34375 14.0625 8.8125 12.992188 9.578125 12.152344 C 9.457031 11.851563 9.042969 10.628906 9.695313 8.976563 C 9.695313 8.976563 10.703125 8.65625 12.996094 10.207031 C 13.953125 9.941406 14.980469 9.808594 16 9.804688 C 17.019531 9.808594 18.046875 9.941406 19.003906 10.207031 C 21.296875 8.65625 22.300781 8.976563 22.300781 8.976563 C 22.957031 10.628906 22.546875 11.851563 22.421875 12.152344 C 23.191406 12.992188 23.652344 14.0625 23.652344 15.375 C 23.652344 19.984375 20.847656 20.996094 18.175781 21.296875 C 18.605469 21.664063 18.988281 22.398438 18.988281 23.515625 C 18.988281 25.121094 18.976563 26.414063 18.976563 26.808594 C 18.976563 27.128906 19.191406 27.503906 19.800781 27.386719 C 24.566406 25.796875 28 21.300781 28 16 C 28 9.371094 22.628906 4 16 4 Z ">
+              </path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="footer-copyright-wrapper">
+          <p class="footer-copyright-text">
+            <a class="footer-copyright-link" href="https://github.com/meet244" target="_blank"> ©<span
+                id="currentYear"></span> | Designed By: Meet Patel | All rights reserved. </a>
+          </p>
+        </div>
+      </div>
+
+    </footer>
+  </div>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $(".io-toggler").each(function () {
+        var io = $(this).data("io"),
+          $opts = $(this).find(".io-options"),
+          $clon = $opts.clone(),
+          $span = $clon.find("span"),
+          width = $opts.width() / 2;
+
+        $(this).append($clon);
+
+        function swap(x) {
+          $clon.stop().animate({ left: x }, 150);
+          $span.stop().animate({ left: -x }, 150);
+          $(this).data("io", x === 0 ? 0 : 1);
+        }
+
+        $clon.draggable({
+          axis: "x",
+          containment: "parent",
+          drag: function (evt, ui) {
+            $span.css({ left: -ui.position.left });
+          },
+          stop: function (evt, ui) {
+            swap(ui.position.left < width / 2 ? 0 : width);
+          }
+        });
+
+        $opts.on("click", function () {
+          swap($clon.position().left > 0 ? 0 : width);
+          if ($clon.position().left > 0) {
+            toggleMode('generate')
+          } else {
+            toggleMode('upscale')
+          }
+        });
+      });
+    });
+
+
+
+  </script>
+
+  <script>
+
+    // Get the current year
+    const currentYear = new Date().getFullYear();
+
+    // Update the content of the 'currentYear' element with the current year
+    document.getElementById('currentYear').textContent = currentYear;
+
+    // Call the checkAndHideBtns function when the page loads
+    window.addEventListener("load", checkAndHideBtns);
+
+    // Get the textarea element
+    const imageGrid = document.getElementById('image-grid');
+    const textarea = document.getElementById('promptInput');
+    const textarea2 = document.getElementById('negativePromptInput');
+
+    // Function to handle the textarea resize and btns hide
+    function handleTextareaResize() {
+      textarea.style.height = 'auto'; // Reset the height to auto
+      textarea.style.height = textarea.scrollHeight + 'px'; // Set the height to match the content
+      textarea2.style.height = 'auto'; // Reset the height to auto
+      textarea2.style.height = textarea2.scrollHeight + 'px'; // Set the height to match the content
+    }
+
+    function checkAndHideBtns() {
+      // Find the image-grid and btns elements
+      var btns = document.querySelector(".btns");
+      var btns2 = document.querySelector(".io-toggler");
+
+      // Check the number of children in the image-grid
+      if (imageGrid.children.length == 0) {
+        // Hide the btns if there are no children
+        btns.style.display = "none";
+        if (localStorage.getItem('generate') == null && localStorage.getItem('upscale') == null) {
+          btns2.style.display = "none";
+        }
+        else {
+          btns2.style.display = "inline-block";
+        }
+      } else {
+        // Show the btns if there are children
+        btns.style.display = "inline-block";
+        btns2.style.display = "inline-block";
+      }
+    }
+
+    // Add event listener for input or change events
+    textarea.addEventListener('input', handleTextareaResize);
+    textarea.addEventListener('change', handleTextareaResize);
+    textarea2.addEventListener('input', handleTextareaResize);
+    textarea2.addEventListener('change', handleTextareaResize);
+
+    let netw = ['3', '2', '1']
+
+    // Initial resize on page load
+    window.addEventListener('load', handleTextareaResize);
+
+    function saveData() {
+      // Get the values from the input fields and select options
+      const prompt = document.getElementById('promptInput').value;
+      const negative = document.getElementById('negativePromptInput').value;
+      // const count = document.getElementById('inputThreads').value;
+      const spinner = document.getElementById('spinnerSelect');
+      const model = spinner.options[spinner.selectedIndex].value;
+
+      // ans = sendRequest(prompt, negative, model);
+      ans = {
+        "ids": [
+          "aHwvtIG9RqCmjhP4ea8Oag",
+          "X3Bo5DqtRS2e3pQTs9piJQ",
+          "uYA4jqIGTBif5uxD21-WYQ",
+          "6VwjfYTSR7So4_WSQcowrA",
+          "InOslRuNRaauvgwIWniTCA",
+          "cwZWCwofQh-z5am14wTncA",
+          "YzkYw9nbSEqrVzV4y99sqA",
+          "kB1GLHjYR-2a3ADcqNPIaA",
+          "z9psbvoIQp2GhNufrN9OLw",
+        ],
+        "images": [
+          "2023-10-21/bf30f90339104f69ad3d5ecab0055170c14f3ed1.webp",
+          "2023-10-21/c9d4c8805a384c8c86297c1172c83326c14f3ed2.webp",
+          "2023-10-21/57d498fa58e845adb53c7cad90e6cca6c14f3ed1.webp",
+          "2023-10-21/c1bbd45a33074f9399109326409f64dac14f3ed0.webp",
+          "2023-10-21/156841075c8a403cabc4537f62cc3675c14f3ed2.webp",
+          "2023-10-21/ec9039ba22eb4426a3f52a1bb5655339c14f3ed3.webp",
+          "2023-10-21/42488aec50c045388352f054d6ca9d1ec14f3ed3.webp",
+          "2023-10-21/45ae68dfc97841f098b8c4d76e414450c14f3ed1.webp",
+          "2023-10-21/1e18e8fd374744ba94c53c0e0f2fdf78c14f3ed0.webp",
+        ],
+        "next_prompt": "shiny honeybee collecting nectar from a flower",
+      }
+
+      // for (i = 0; i < ans["images"].length; i++) {
+      //   console.log(ans['images'][i]);
+      //   item = createGridItem([ans['images'][i], model, prompt], "generate");
+      //   imageGrid.append(item);
+      // }
+
+
+      writeToLocal("generate", ans["images"], prompt, model)
+      checkAndHideBtns();
+    }
+
+    function sendRequest(prompt, negative, model) {
+      if (netw.length == 0) {
+        showPopup("Please wait for requests to complete");
+        return
+      }
+
+      net = netw.pop()
+      // Construct the JSON payload
+      const payload = {
+        model: model,
+        negative: negative,
+        prompt: prompt
+      };
+
+      // Send the JSON payload as a POST request
+      fetch(currentURL + '/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log('Data saved successfully');
+          showPopup(`Creating - ${net} Done!`);
+          netw.push(net);
+          netw.sort()
+          return data;
+        })
+        .catch(error => {
+          showPopup(`Creating - ${net} Failed!`);
+          netw.push(net);
+          netw.sort()
+          console.error('Error:', error);
+          return "error";
+        });
+
+    }
+
+    function showPopup(message) {
+      showToast(message);
+    }
+
+    function toggleMode(m) {
+      // const generateButton = document.getElementById('generateButton');
+      mode = m
+      // const upscaleButton = document.getElementById('upscaleButton');
+      const imageGrid = document.getElementById('image-grid');
+
+      parentElement = document.getElementById('image-grid');
+
+      if (parentElement) {
+        // Remove all children of the parent element
+        while (parentElement.firstChild) {
+          parentElement.removeChild(parentElement.firstChild);
+        }
+      }
+
+      if (mode === 'generate') {
+        btn = document.getElementById('allButton');
+        btn.innerText = 'Upscale All';
+        currGmode = 'generate'
+        readToLocal('generate');
+
+      } else if (mode === 'upscale') {
+        btn = document.getElementById('allButton');
+        btn.innerText = 'Download All';
+        currGmode = 'upscale'
+        readToLocal('upscale');
+      }
+      checkAndHideBtns();
+    }
+
+    function downloadImage(src) {
+      fetch(src)
+        .then(response => response.blob())
+        .then(blob => {
+          const imageURL = URL.createObjectURL(blob);
+          const downloadLink = document.createElement('a');
+          downloadLink.href = imageURL;
+          downloadLink.target = '_blank'; // Open in a new tab
+          downloadLink.download = generateUUID() + '.png'; // Set a default file name if needed
+          downloadLink.click();
+        });
+    }
+
+    function createGridItem(url, mode) {
+      const gridItem = document.createElement('div');
+      gridItem.className = 'grid-item';
+
+      const image = document.createElement('img');
+      image.src = (mode == 'generate') ? "https://img.craiyon.com/" + url[0] : "https://pics.craiyon.com/" + url[0];
+
+      const upgradeIcon = document.createElement('span');
+      upgradeIcon.className = 'material-symbols-outlined';
+
+      const span = document.createElement('span');
+      span.className = "use-span";
+      span.innerText = url[1] + " | " + url[2]; // Set the text before appending the button
+
+      span.addEventListener('click', () => {
+        document.getElementById('promptInput').value = url[2]
+        document.getElementById('spinnerSelect').selectedIndex = value === 'art' ? 0 : value === 'drawing' ? 1 : value === 'photo' ? 2 : value === 'none' ? 3 : 0;
+        handleTextareaResize()
+      })
+
+      if (mode === 'generate') {
+        upgradeIcon.innerHTML = 'upgrade';
+        image.addEventListener('click', () => {
+
+          if (netw.length == 0) {
+            showPopup("Please wait for requests to complete");
+            return
+          }
+          let net = ntew.pop()
+
+          gridItem.remove(gridItem)
+
+          const promptInputNeg = document.getElementById('negativePromptInput');
+
+          const requestBody = {
+            image_id: url[0],
+            prompt: url[2],
+            version: '35s5hfwn9n78gb06',
+            token: null,
+            model: url[1],
+            negative_prompt: ""
+          };
+
+          fetch('/upgrade', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+          })
+            .then(response => response.json())
+            .then(data => {
+              // console.log('Data saved successfully');
+              showPopup(`Upscale - ${net} successful`);
+              netw.push(net);
+              netw.sort()
+              writeToLocal("upscale", data['images'], url[2], url[1])
+              removeFromLocal(mode, url[0]);
+            })
+            .catch(error => {
+              showPopup(`Upscale - ${net} Failed`);
+              netw.push(net);
+              netw.sort()
+              console.error('Error:', error);
+            });
+        });
+
+      } else if (mode === 'upscale') {
+        upgradeIcon.innerHTML = 'zoom_in'; // Material Icon HTML entity code for "zoom_in"
+        image.addEventListener('click', () => {
+          // Click function for upscale mode
+          const overlay = document.createElement('div');
+          overlay.classList.add('overlay');
+
+          const highlightedImage = document.createElement('img');
+          highlightedImage.src = (mode === 'generate') ? "https://img.craiyon.com/" + url[0] : "https://pics.craiyon.com/" + url[0];
+          highlightedImage.classList.add('highlighted-image');
+
+          const buttonContainer = document.createElement('div');
+          buttonContainer.style.position = 'fixed';
+          buttonContainer.style.top = '50%';
+          buttonContainer.style.right = '0';
+          buttonContainer.style.transform = 'translateY(-50%)';
+          buttonContainer.style.zIndex = '9999';
+          buttonContainer.style.display = 'flex';
+          buttonContainer.style.flexDirection = 'column';
+          buttonContainer.style.alignItems = 'center';
+
+          // const cancelButton = document.createElement('button');
+          // cancelButton.innerText = 'Cancel';
+          // cancelButton.className = 'CancelButton';
+          // cancelButton.style.marginBottom = '10px';
+          overlay.addEventListener('click', () => {
+            document.body.removeChild(overlay);
+            document.body.removeChild(buttonContainer);
+          });
+
+          const downloadButton = document.createElement('a');
+          downloadButton.innerText = 'Download';
+          downloadButton.className = 'CancelButton';
+          downloadButton.addEventListener('click', () => {
+            downloadImage(highlightedImage.src);
+          });
+
+
+          // buttonContainer.appendChild(cancelButton);
+          buttonContainer.appendChild(downloadButton);
+
+          overlay.appendChild(highlightedImage);
+          overlay.appendChild(buttonContainer);
+          document.body.appendChild(overlay);
+        });
+      }
+
+      upgradeIcon.addEventListener('click', () => { image.click() })
+      // Add hover effect 
+      gridItem.addEventListener('mouseenter', () => {
+        image.style.filter = 'brightness(70%)';
+        image.style.transform = 'scale(1.05)';
+      });
+
+      gridItem.addEventListener('mouseleave', () => {
+        image.style.filter = '';
+        image.style.transform = '';
+      });
+
+      gridItem.appendChild(image);
+      gridItem.appendChild(span);
+      gridItem.appendChild(upgradeIcon);
+
+      return gridItem;
+    }
+
+    function Delete() {
+      if (localStorage.getItem(currGmode)) {
+        localStorage.removeItem(currGmode); // Replace 'yourItemKey' with the key of the item you want to remove
+      }
+      readToLocal(currGmode);
+      checkAndHideBtns();
+    }
+
+    function showToast(message) {
+      const toastContainer = document.getElementById('toastContainer');
+
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerText = message;
+
+      toastContainer.appendChild(toast);
+
+      // Change background color to #4285F4
+      // toastContainer.style.backgroundColor = '#4285F4';
+
+      setTimeout(function () {
+        toast.classList.add('show');
+        setTimeout(function () {
+          toast.classList.remove('show');
+          setTimeout(function () {
+            toast.remove();
+
+            // Revert background color to transparent
+            toastContainer.style.backgroundColor = 'transparent';
+          }, 300);
+        }, 2000);
+      }, 300);
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function writeToLocal(mode, data, prompt, model) {
+      let prev = JSON.parse(localStorage.getItem(mode));
+
+      if (prev == null) { prev = [] }
+      for (d in data) {
+        // console.log([data[d], model, prompt])
+        prev.push([data[d], model, prompt]);
+      }
+
+      localStorage.setItem(mode, JSON.stringify(prev));
+
+      if (currGmode == mode) { readToLocal(mode) };
+    }
+
+    function removeFromLocal(mode, item) {
+      data = JSON.parse(localStorage.getItem(mode))
+      for (let i = 0; i < data.length; i++) {
+        if (data[i][0] == item) {
+          data.splice(i, 1);
+          break;
+        }
+      }
+      // console.log(data)
+      localStorage.setItem(mode, JSON.stringify(data));
+    }
+
+    function readToLocal(mode) {
+
+      parentElement = document.getElementById('image-grid');
+
+      if (parentElement) {
+        // Remove all children of the parent element
+        while (parentElement.firstChild) {
+          parentElement.removeChild(parentElement.firstChild);
+        }
+      }
+
+
+      let d = JSON.parse(localStorage.getItem(mode));
+
+      // console.log(d)
+
+      for (p in d) {
+        p = d[p]
+        item = createGridItem([p[0], p[1], p[2]], mode);
+        parentElement.append(item);
+      }
+    }
+
+    async function DownloadOrUpscale() {
+      let imageGrid = document.getElementById('image-grid');
+
+      if (currGmode == "generate") {
+        const imageGrid = document.getElementById('image-grid');
+        for (let i = 0; i < imageGrid.children.length; i++) {
+          const child = imageGrid.children[i];
+          const imgElement = child.querySelector('img');
+          // if (imgElement.src.includes('pics.craiyon.com')) {
+          //   downloadImage(imgElement.src);
+          // }
+          // else {
+          imgElement.click()
+          // }
+          await sleep(250);
+        }
+      }
+      else {
+        const imageUrls = [];
+
+        for (let i = 0; i < imageGrid.children.length; i++) {
+          const child = imageGrid.children[i];
+          const imgElement = child.querySelector('img');
+          imageUrls.push(imgElement.src)
+        }
+
+        const zip = new JSZip();
+
+        const promises = imageUrls.map((imageUrl, index) => {
+          return fetch(imageUrl)
+            .then(response => response.blob())
+            .then(blob => {
+              zip.file(`image${index + 1}.jpg`, blob);
+            });
+        });
+
+        Promise.all(promises).then(() => {
+          // Once all images are added to the zip, create the zip file
+          zip.generateAsync({ type: 'blob' }).then(content => {
+            // Save the zip file
+            saveAs(content, 'Creata-images.zip');
+          });
+        });
+
+      }
+    }
+
+    // function toUpload(){
+    //   window.open(currentURL+'/upload', '_blank');
+    // }
+
+    function generateUUID() {
+      let d = new Date().getTime();
+      const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+      return uuid;
+    }
+
+    // Clear URL query parameters
+    // Call the function to clear URL query parameters
+    // currentURL = window.location.href;
+    currentURL = '192.168.29.182:5000';
+    toggleMode('generate');
+    readToLocal('generate');
+
+    currGmode = 'generate'
+    // loadData();
+    // localStorage.clear()
+  </script>
+</body>
+
+</html>

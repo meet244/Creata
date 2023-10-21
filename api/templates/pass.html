@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Input Page</title>
+    <style>
+        body {
+            background-color: #12151E;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .heading {
+            color: white;
+            font-family: cursive;
+            font-size: 42px;
+            margin-bottom: 30px;
+        }
+        
+        .password-input {
+            background-color: rgb(34, 40, 57);
+            color: white;
+            border: 0;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 26px;
+            caret-color: white;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 1080px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .heading {
+                text-align: center;
+                font-size: 95px;
+            }
+            
+            .password-input {
+                font-size: 60px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Restricted zone🚫, mysteries abound💫</h1>
+        <input type="password" id="password-input" class="password-input" placeholder="Secret combination" autofocus>
+    </div>
+    
+    <script>
+        document.getElementById('password-input').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                var password = document.getElementById('password-input').value;
+                
+                passwordc(password)
+            }
+        });
+
+        function passwordc(pass){
+            fetch(window.location.href.split('/')[0]+'/pass', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({code:pass})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if(data != ""){
+                        window.location.href = window.location.href+`?code=${data}`;
+                    }
+                })
+                .catch(error => {
+                    console.log('Error fetching images:', error);
+                });
+        }
+    </script>
+</body>
+</html>
