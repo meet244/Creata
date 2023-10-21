@@ -2,3 +2,4 @@ Flask==2.2.2
 pymongo==4.3.3
 requests==2.31.0
 Flask_Cors==4.0.0
+Werkzeug==3.0.0
