@@ -15,7 +15,7 @@ I've scraped an API from [Craiyon](https://craiyon.com)🪄 and used it to build
 
 ## Website Demo
 
-![AI-generated GIF](example.gif)
+![Website GIF](https://github.com/meet244/Creata/assets/83262693/db996482-da69-45f6-ba5e-6928306382c2)
 
 ## Getting Started
 
