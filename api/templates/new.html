@@ -1435,7 +1435,7 @@
 
     function sendRequest(prompt, negative, model) {
 
-      showPopup(`Request Sent. Please wait for 2 mins.`);
+      if(!window.location.href.includes('creata')){showPopup(`Request Sent. Please wait for 2 mins.`);}
       // Construct the JSON payload
       const payload = {
         model: model,
@@ -1455,6 +1455,7 @@
         .then(response => {
           if (response.status == 400) {
             showPopup(`This dosen't work properly online. Try to clone Repo and run locally.`);
+            return {};
           }
           else if (response.status != 200) {
             showPopup(`Too much traffic, please retry in 10s`);
