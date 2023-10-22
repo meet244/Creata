@@ -1,5 +1,4 @@
-
-![Frame 6](https://github.com/meet244/Creata/assets/83262693/2be2d9bd-bbe7-403c-ac8c-515ef632a575)
+![image](https://github.com/meet244/Creata/assets/83262693/462bc6f3-16bc-4a75-9801-e3711c4ab91b)
 
 # Creata - AI Generated Images
 
@@ -7,7 +6,7 @@
 
 ## Website Demo
 
-![Website GIF](https://github.com/meet244/Creata/assets/83262693/db996482-da69-45f6-ba5e-6928306382c2)
+![example](https://github.com/meet244/Creata/assets/83262693/acf2f009-3793-4548-b151-86f47c46a6c5)
 
 ## What is Creata?
 
@@ -18,6 +17,10 @@ Now, you have the power to unleash your creativity with Creata and create captiv
 ## How Creata Works
 
 I've scraped an API from Craiyon.com🪄 and used it to build a website with a Flask backend. This website calls the scraped API to generate AI images. While the project works flawlessly when cloned and used locally, it may face deployment issues online. Unfortunately, I'm not sure why this happens, but feel free to explore the project.🤔
+
+## Workflow
+
+![image](https://github.com/meet244/Creata/assets/83262693/f5eb945f-45e1-4857-9ce2-02e27bf29d66)
 
 ## Getting Started
 
