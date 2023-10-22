@@ -1454,7 +1454,7 @@
       })
         .then(response => {
           if (response.status == 400) {
-            showPopup(`This dosen't work properly online. Try to clone Repo and run locally.`);
+            showPopup(`This dosen't work properly online. Please clone Repo and run locally.`);
             return {};
           }
           else if (response.status != 200) {
