@@ -7,16 +7,6 @@ app = Flask(__name__)
 app.static_folder = "static"
 app.static_url_path = "/static"
 
-
-# @app.before_request
-# def check_origin():
-#     allowed_origins = ["https://creata.vercel.app",'creata.vercel.app']
-#     origin = request.headers.get("Origin")
-#     if origin == None : origin = request.headers.get("Host")
-#     print(origin)
-#     if origin not in allowed_origins:
-#         return render_template('allow.html')  # Forbidden
-
 @app.route("/")
 def home():
     return render_template("new.html")
@@ -24,6 +14,14 @@ def home():
 
 @app.route("/save", methods=["POST"])
 def save():
+
+    prompt = request.json.get("prompt")
+    model = request.json.get("model")
+    negative = request.json.get("negative")
+    
+    origin = request.headers.get("Host")
+    if origin == "creata.vercel.app":
+        return "",400
 
     reqUrl = "https://api.craiyon.com/v3"
 
@@ -35,11 +33,11 @@ def save():
 
     payload = json.dumps(
         {
-            "prompt": "wild peacock in sky",
+            "prompt": prompt,
             "version": "c4ue22fb7kb6wlac",
             "token": None,
-            "model": "art",
-            "negative_prompt": "",
+            "model": model,
+            "negative_prompt": negative,
         }
     )
 
@@ -55,6 +53,10 @@ def save():
 
 @app.route("/upgrade", methods=["POST"])
 def upgrade():
+
+    origin = request.headers.get("Host")
+    if origin == "creata.vercel.app":
+        return "",400
 
     image_id = request.json.get("image_id", "")
     model = request.json.get("model", "")
