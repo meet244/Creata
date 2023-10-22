@@ -1,7 +1,13 @@
 
+![Frame 6](https://github.com/meet244/Creata/assets/83262693/2be2d9bd-bbe7-403c-ac8c-515ef632a575)
+
 # Creata - AI Generated Images
 
 [Creata](https://creata.vercel.app/)✨ is a project that showcases my UI and API skills, allowing you to create stunning AI-generated images effortlessly.🖼️
+
+## Website Demo
+
+![Website GIF](https://github.com/meet244/Creata/assets/83262693/db996482-da69-45f6-ba5e-6928306382c2)
 
 ## What is Creata?
 
@@ -11,11 +17,7 @@ Now, you have the power to unleash your creativity with Creata and create captiv
 
 ## How Creata Works
 
-I've scraped an API from [Craiyon](https://craiyon.com)🪄 and used it to build a website with a Flask backend. This website calls the scraped API to generate AI images. While the project works flawlessly when cloned and used locally, it may face deployment issues online. Unfortunately, I'm not sure why this happens, but feel free to explore the project.🤔
-
-## Website Demo
-
-![Website GIF](https://github.com/meet244/Creata/assets/83262693/db996482-da69-45f6-ba5e-6928306382c2)
+I've scraped an API from Craiyon.com🪄 and used it to build a website with a Flask backend. This website calls the scraped API to generate AI images. While the project works flawlessly when cloned and used locally, it may face deployment issues online. Unfortunately, I'm not sure why this happens, but feel free to explore the project.🤔
 
 ## Getting Started
 
@@ -42,4 +44,4 @@ To get started with Creata, you can clone this repository by following these ste
 
 This project is intended for educational purposes only, and I have no intention of causing harm to anyone using it. Please use it responsibly and respect the terms of service of the APIs and websites involved.
 
-Visit Creata at [creata.vercel.app](https://creata.vercel.app) to experience the magic of AI-generated images. Have fun creating your own masterpieces! 🌟
+Visit Creata at [CREATA](https://creata.vercel.app) to experience the magic of AI-generated images. Have fun creating your own masterpieces! 🌟
