@@ -20,7 +20,7 @@
       display: inline-block;
       position: relative;
       font: 20px/1.5 sans-serif;
-      /* background: url(https://i.stack.imgur.com/XVCAQ.png); */
+      
       background-color: #006cff;
       color: #fff;
       border: 4px solid transparent;
@@ -45,7 +45,7 @@
       font-weight: bold;
     }
 
-    /* the jQ clone */
+    
     .io-options+.io-options {
       position: absolute;
       background: #fff;
@@ -106,14 +106,14 @@
 
     .centered-text button {
       margin: 50px 0 0 0;
-      /* width: 60%; */
+      
       font-size: 20px;
       padding: 17px;
       border-radius: 15px;
       font-weight: normal;
     }
 
-    /* Reset some default styles for list items */
+    
     ul,
     li {
       list-style: none;
@@ -121,7 +121,7 @@
       margin: 0;
     }
 
-    /* Style the navbar */
+    
     .navbar {
       height: 40px;
       position: fixed;
@@ -136,14 +136,14 @@
       padding: 10px 20px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       z-index: 100;
-      /* Ensure the navbar is above other elements */
+      
     }
 
     .menu {
       margin-right: 7%;
     }
 
-    /* Style the logo */
+    
     .logo img {
       margin-top: 5px;
       margin-left: 80%;
@@ -151,7 +151,7 @@
       height: auto;
     }
 
-    /* Style the menu items */
+    
     .menu a {
       text-decoration: none;
       color: #ffffff;
@@ -175,6 +175,7 @@
     }
 
     .main11 h2 {
+    margin-bottom: 30px;
       margin-top: 0;
       font-size: 30px;
       font-weight: normal;
@@ -210,7 +211,7 @@
   </style>
 
   <style>
-    /* For WebKit-based browsers (e.g., Chrome, Safari) */
+
     ::-webkit-scrollbar {
       width: 12px;
       background: transparent;
@@ -226,7 +227,7 @@
     }
 
     * {
-      font-family: 'Brush Script MT', cursive;
+      font-family: 'Brush Script MT', Helvetica, Arial, sans-serif;
       scrollbar-color: transparent transparent;
       scrollbar-track-color: transparent;
     }
@@ -235,19 +236,15 @@
       scroll-behavior: smooth;
     }
 
-    /* For Microsoft Edge and Internet Explorer */
-    /* Note: Internet Explorer does not support customizing the scrollbar */
-    /* These properties will only affect Microsoft Edge (EdgeHTML engine) */
-    /* The thumb styling will still be applied */
     @supports (-ms-overflow-style: none) {
 
-      /* Remove the default scrollbar */
+      
       ::-ms-scrollbar {
         width: 0;
         height: 0;
       }
 
-      /* Style the thumb */
+      
       ::-ms-scrollbar-thumb {
         background-color: rgb(10, 201, 96);
         border-radius: 6px;
@@ -265,9 +262,9 @@
       display: inline-block;
       justify-self: center;
       width: 260px;
-      /* Adjust the width as needed */
+      
       margin: 10px;
-      /* Adjust the margin as needed */
+      
     }
 
     .grid-item img {
@@ -315,7 +312,7 @@
       cursor: pointer;
       transition: background-color 0.3s;
       font-family: 'Brush Script MT', cursive;
-      /* font-weight: bold; */
+      
     }
 
     .active {
@@ -330,7 +327,7 @@
     }
 
     .CancelButton {
-      /* font-family: 'Brush Script MT', cursive; */
+      
       display: inline-block;
       padding: 10px 20px;
       font-size: 16px;
@@ -362,7 +359,8 @@
       border: none;
       border-radius: 5px;
       width: 80%;
-      /* Adjust the width as needed */
+      height: 60px;
+      
     }
 
     .spinner-container {
@@ -385,7 +383,7 @@
       padding: 10px 20px;
       font-size: 16px;
       border: none;
-      /* border-radius: 4px; */
+      
       cursor: pointer;
       transition: background-color 0.3s;
     }
@@ -396,7 +394,7 @@
       padding: 10px 20px;
       font-size: 16px;
       border: none;
-      /* border-radius: 4px; */
+      
       cursor: pointer;
       transition: background-color 0.3s;
     }
@@ -407,7 +405,7 @@
       padding: 10px 20px;
       font-size: 16px;
       border: none;
-      /* border-radius: 4px; */
+      
       cursor: pointer;
       transition: background-color 0.3s;
     }
@@ -418,7 +416,7 @@
       padding: 10px 20px;
       font-size: 16px;
       border: none;
-      /* border-radius: 4px; */
+      
       cursor: pointer;
       transition: background-color 0.3s;
     }
@@ -439,26 +437,26 @@
       overflow: hidden;
       resize: none;
       min-height: 40px;
-      /* Set a minimum height for the textarea */
+      
     }
 
     .use-span {
       cursor: pointer;
       position: absolute;
       bottom: -25px;
-      /* Adjust the distance from the bottom as needed */
+      
       left: 0;
       opacity: 1;
-      /* font-family: 'Brush Script MT', cursive; */
+      
       width: 100%;
       text-align: center;
       color: #fff;
       color: #1d1d1d;
-      /* Adjust the text color as needed */
+      
       padding: 5px 0;
-      /* Adjust the padding as needed */
+      
       font-size: 14px;
-      /* Adjust the font size as needed */
+      
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -473,9 +471,9 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.75);
-      /* Adjust the background color and opacity as needed */
+      
       z-index: 9998;
-      /* Adjust the z-index as needed */
+      
       display: flex;
       justify-content: center;
       align-items: center;
@@ -485,7 +483,7 @@
       max-width: 90vw;
       max-height: 90vh;
       z-index: 9999;
-      /* Adjust the z-index as needed */
+      
     }
 
     .toast-container {
@@ -500,13 +498,13 @@
     .toast {
       background-color: #4285F4;
       font-size: 16px;
-      /* font-family: 'Brush Script MT', cursive; */
+      
       padding: 16px;
       border-radius: 8px;
       margin: 2px;
     }
 
-    /* Mobile Styles */
+    
     @media (max-width: 1080px) {
       .grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -564,7 +562,7 @@
         cursor: pointer;
         transition: background-color 0.3s;
         font-family: 'Brush Script MT', cursive;
-        /* font-weight: bold; */
+        
       }
 
       .active {
@@ -598,6 +596,7 @@
         font-size: 40px;
         width: 100%;
         width: 95vw;
+        height: 120px;
       }
 
       /* #inputThreads {
@@ -659,7 +658,7 @@
 
       .centered-text button {
         margin: 50px 0 0 0;
-        /* width: 60%; */
+        
         font-size: 50px;
         padding: 27px;
         border-radius: 15px;
@@ -996,10 +995,10 @@
 
 
 
-    /* Media Query For different screens */
+    
     @media (min-width:320px) and (max-width:479px) {
 
-      /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+      
       .footer-content {
         margin-left: auto;
         margin-right: auto;
@@ -1011,7 +1010,7 @@
 
     @media (min-width:480px) and (max-width:599px) {
 
-      /* smartphones, Android phones, landscape iPhone */
+      
       .footer-content {
         margin-left: auto;
         margin-right: auto;
@@ -1023,7 +1022,7 @@
 
     @media (min-width:600px) and (max-width: 800px) {
 
-      /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+      
       .footer-content {
         margin-left: auto;
         margin-right: auto;
@@ -1034,17 +1033,17 @@
     }
 
     @media (min-width:801px) {
-      /* tablet, landscape iPad, lo-res laptops ands desktops */
+      
 
     }
 
     @media (min-width:1025px) {
-      /* big landscape tablets, laptops, and desktops */
+      
 
     }
 
     @media (min-width:1281px) {
-      /* hi-res laptops and desktops */
+      
 
     }
 
@@ -1088,7 +1087,7 @@
     </div>
     <div class="menu">
       <a href="#m11">What's This</a>
-      <a href="#m2">Create</a>
+      <a href="#create">Create</a>
       <a href="#">About</a>
     </div>
   </div>
@@ -1103,7 +1102,7 @@
       <h1>Make your imagination come true with the power of AI</h1>
       <h5>Discover a whole new world of AI-generated images that spring to life with just your words. Describe your
         vision, and let AI bring it to reality effortlessly.</h5>
-      <a href="#m2"><button>Start Creating</button></a>
+      <a href="#create"><button>Start Creating</button></a>
     </div>
   </div>
 
@@ -1130,7 +1129,7 @@
     <video src="/static/Creata.mp4" autoplay loop muted playsinline></video>
   </div>
 
-  <h2 id="m2"></h2>
+  <h2 id="create"></h2>
   <div class="main2">
     <h2>Here's the thing</h2>
     <div class="button-container">
@@ -1144,7 +1143,6 @@
             <option value="photo">photo</option>
             <option value="none">none</option>
           </select>
-          <!-- <input type="text" id="inputThreads" placeholder="Threads" inputmode="numeric" pattern="[0-9]*" /> -->
           <button id="createButton" onclick="saveData()">Create</button>
         </div>
       </div>
@@ -1158,7 +1156,6 @@
       <br>
 
       <div class="btns">
-        <!-- <button id="loadButton" onclick="loadData()">Refresh</button> -->
         <button id="deleteButton" onclick="Delete()">Delete All</button>
         <button id="allButton" onclick="DownloadOrUpscale()">Download All</button>
       </div>
@@ -1180,7 +1177,6 @@
           <div class="footer-logo">
             <a class="footer-logo-link" href="#">
               <span class="hidden-link-text">LOGO</span>
-              <!-- <h1>LOGO</h1> -->
               <img id="btmlogo" style="width: 150px;" src="/static/l2.png" alt="CREATA">
             </a>
           </div>
@@ -1191,10 +1187,10 @@
                 <a href="#">What's this</a>
               </li>
               <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                <a href="#m11">Create</a>
+                <a href="#create">Create</a>
               </li>
               <li class="menu-item menu-item-type-post_type menu-item-object-product">
-                <a href="#m2">About</a>
+                <a href="#m11">About</a>
               </li>
             </ul>
           </div>
@@ -1223,10 +1219,10 @@
             <ul id="menu-legal" class="footer-menu-list">
               <li
                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-170434">
-                <a href="https://github.com/meet244/Creata">Star this 🌟</a>
+                <a href="https://github.com/meet244/Creata">Star this ⭐</a>
               </li>
               <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                <a href="https://github.com/meet244/Creata">Know more 💖</a>
+                <a href="https://github.com/meet244/Creata">Love this 💖</a>
               </li>
             </ul>
           </div>
@@ -1315,10 +1311,7 @@
 
     </footer>
   </div>
-
-
-
-
+  
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
@@ -1431,51 +1424,31 @@
       const spinner = document.getElementById('spinnerSelect');
       const model = spinner.options[spinner.selectedIndex].value;
 
-      // ans = sendRequest(prompt, negative, model);
-      ans = {
-        "ids": [
-          "aHwvtIG9RqCmjhP4ea8Oag",
-          "X3Bo5DqtRS2e3pQTs9piJQ",
-          "uYA4jqIGTBif5uxD21-WYQ",
-          "6VwjfYTSR7So4_WSQcowrA",
-          "InOslRuNRaauvgwIWniTCA",
-          "cwZWCwofQh-z5am14wTncA",
-          "YzkYw9nbSEqrVzV4y99sqA",
-          "kB1GLHjYR-2a3ADcqNPIaA",
-          "z9psbvoIQp2GhNufrN9OLw",
-        ],
-        "images": [
-          "2023-10-21/bf30f90339104f69ad3d5ecab0055170c14f3ed1.webp",
-          "2023-10-21/c9d4c8805a384c8c86297c1172c83326c14f3ed2.webp",
-          "2023-10-21/57d498fa58e845adb53c7cad90e6cca6c14f3ed1.webp",
-          "2023-10-21/c1bbd45a33074f9399109326409f64dac14f3ed0.webp",
-          "2023-10-21/156841075c8a403cabc4537f62cc3675c14f3ed2.webp",
-          "2023-10-21/ec9039ba22eb4426a3f52a1bb5655339c14f3ed3.webp",
-          "2023-10-21/42488aec50c045388352f054d6ca9d1ec14f3ed3.webp",
-          "2023-10-21/45ae68dfc97841f098b8c4d76e414450c14f3ed1.webp",
-          "2023-10-21/1e18e8fd374744ba94c53c0e0f2fdf78c14f3ed0.webp",
-        ],
-        "next_prompt": "shiny honeybee collecting nectar from a flower",
-      }
+      sendRequest(prompt, negative, model);
 
       // for (i = 0; i < ans["images"].length; i++) {
       //   console.log(ans['images'][i]);
       //   item = createGridItem([ans['images'][i], model, prompt], "generate");
       //   imageGrid.append(item);
       // }
+      // console.log(ans['images'])
+      // let jsdgn = ans.images
+      // console.log(jsdgn)
+      // console.log(ans.images)
 
-
-      writeToLocal("generate", ans["images"], prompt, model)
+      // writeToLocal("generate", ans['images'], prompt, model)
       checkAndHideBtns();
     }
 
     function sendRequest(prompt, negative, model) {
       if (netw.length == 0) {
-        showPopup("Please wait for requests to complete");
-        return
+        showPopup("Please wait for past requests to complete");
+        return;
       }
 
       net = netw.pop()
+
+      showPopup(`Request Sent - ${net}. Please wait for 2 mins.`);
       // Construct the JSON payload
       const payload = {
         model: model,
@@ -1484,29 +1457,48 @@
       };
 
       // Send the JSON payload as a POST request
-      fetch(currentURL + '/save', {
+      // fetch(currentURL + '/save', {
+      fetch('/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       })
-        .then(response => response.json())
+        // .then(response => {
+        //   if(response.status != 200){
+        //     showPopup(`Too much traffic, please retry in 10s`);
+        //     return {'images':[]}
+        //   }
+        //   else{
+        //     return response.json()
+        //   }
+        // })
+        .then(response => {
+          if (response.status != 200) {
+            showPopup(`Too much traffic, please retry in 10s`);
+            return {};
+          } else {
+            return response.json();
+          }
+        })
         .then(data => {
-          // console.log('Data saved successfully');
-          showPopup(`Creating - ${net} Done!`);
           netw.push(net);
           netw.sort()
-          return data;
+          if (data['images'] != undefined) {
+            showPopup(`Creating - ${net} Done!`);
+            writeToLocal("generate", data['images'], prompt, model)
+          }
+          if (data['prompt'] != undefined) {
+            // todo work here
+          }
         })
         .catch(error => {
           showPopup(`Creating - ${net} Failed!`);
           netw.push(net);
           netw.sort()
           console.error('Error:', error);
-          return "error";
         });
-
     }
 
     function showPopup(message) {
@@ -1584,7 +1576,9 @@
             showPopup("Please wait for requests to complete");
             return
           }
-          let net = ntew.pop()
+          let net = netw.pop()
+
+          showPopup(`Upscale Requested - ${net}. Please wait for 2 mins.`);
 
           gridItem.remove(gridItem)
 
@@ -1606,14 +1600,23 @@
             },
             body: JSON.stringify(requestBody)
           })
-            .then(response => response.json())
+            .then(response => {
+              if (response.status != 200) {
+                showPopup(`Too much traffic, please retry in 10s`);
+                return {};
+              } else {
+                return response.json();
+              }
+            })
             .then(data => {
               // console.log('Data saved successfully');
-              showPopup(`Upscale - ${net} successful`);
+              if(data['images']!=undefined){
+                showPopup(`Upscale - ${net} successful`);
+                writeToLocal("upscale", data['images'], url[2], url[1])
+                removeFromLocal(mode, url[0]);
+              }
               netw.push(net);
               netw.sort()
-              writeToLocal("upscale", data['images'], url[2], url[1])
-              removeFromLocal(mode, url[0]);
             })
             .catch(error => {
               showPopup(`Upscale - ${net} Failed`);
