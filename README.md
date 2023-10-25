@@ -1,7 +1,5 @@
 ![image](https://github.com/meet244/Creata/assets/83262693/462bc6f3-16bc-4a75-9801-e3711c4ab91b)
 
-# Creata - AI Generated Images
-
 [Creata](https://creata.vercel.app/)✨ is a project that showcases my UI and API skills, allowing you to create stunning AI-generated images effortlessly.🖼️
 
 ## Website Demo
